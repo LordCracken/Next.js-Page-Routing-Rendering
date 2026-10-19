@@ -1,8 +1,9 @@
 import {notFound} from "next/navigation";
 
 import {DUMMY_NEWS} from "@/dummy-news";
+import {Suspense} from "react";
 
-export default async function NewsDetailPage({params}) {
+async function NewsDetailContent({params}) {
   const {slug} = await params;
   const newsItem = DUMMY_NEWS.find(newsItem => newsItem.slug === slug);
 
@@ -11,13 +12,23 @@ export default async function NewsDetailPage({params}) {
   }
 
   return (
+    <>
+      <header>
+        <img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
+        <h1>{newsItem.title}</h1>
+        <time dateTime={newsItem.date}>{newsItem.date}</time>
+      </header>
+      <p>{newsItem.content}</p>
+    </>
+  );
+}
+
+export default function NewsDetailPage({params}) {
+  return (
       <article className="news-article">
-        <header>
-          <img src={`/images/news/${newsItem.image}`} alt={newsItem.title} />
-          <h1>{newsItem.title}</h1>
-          <time dateTime={newsItem.date}>{newsItem.date}</time>
-        </header>
-        <p>{newsItem.content}</p>
+        <Suspense fallback={<p>Loading this news article content...</p>}>
+          <NewsDetailContent params={params} />
+        </Suspense>
       </article>
   );
 }
