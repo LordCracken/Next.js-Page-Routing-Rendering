@@ -1,11 +1,10 @@
-import {use} from "react";
 import Link from "next/link";
 
 import NewsList from "@/components/news-list";
 import {getAvailableNewsMonths, getAvailableNewsYears, getNewsForYear, getNewsForYearAndMonth} from "@/lib/news";
 
-export default function FilteredNewsPage({params}) {
-  const {filter} = use(params);
+export default async function FilteredNewsPage({params}) {
+  const {filter} = await params;
 
   const selectedYear = filter?.[0];
   const selectedMonth = filter?.[1];
