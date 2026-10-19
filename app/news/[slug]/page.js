@@ -1,10 +1,15 @@
 import {use} from "react";
+import {notFound} from "next/navigation";
 
 import {DUMMY_NEWS} from "@/dummy-news";
 
 export default function NewsDetailPage({params}) {
   const {slug} = use(params);
   const newsItem = DUMMY_NEWS.find(newsItem => newsItem.slug === slug);
+
+  if (!newsItem) {
+    notFound();
+  }
 
   return (
       <article className="news-article">
