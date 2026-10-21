@@ -1,5 +1,8 @@
 import Link from 'next/link';
 
+import NavLink from "@/components/nav-link";
+import {Suspense} from "react";
+
 export default function MainHeader() {
   return (
     <header id="main-header">
@@ -7,11 +10,16 @@ export default function MainHeader() {
         <Link href="/">NextNews</Link>
       </div>
       <nav>
-        <ul>
-          <li>
-            <Link href="/news">News</Link>
-          </li>
-        </ul>
+        <Suspense fallback={<p>Loading nav links...</p>}>
+          <ul>
+              <li>
+                <NavLink href="/news">News</NavLink>
+              </li>
+              <li>
+                <NavLink href="/archive">Archive</NavLink>
+              </li>
+          </ul>
+        </Suspense>
       </nav>
     </header>
   );
